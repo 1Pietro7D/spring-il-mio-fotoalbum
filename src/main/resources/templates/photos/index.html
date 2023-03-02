@@ -15,6 +15,13 @@
 </th:block>
 </head>
 <body>
-	<div th:each="photo : ${photoList}">[[${photo.getName()}]]</div>
+	<div th:each="photo : ${photoList}">
+	<h3>[[${photo.title}]]</h3>
+	</br> Category ->
+	<span th:each="category : ${photo.categories}">[[${category.getName()}]], </span> 
+	<img th:src="${photo.url}" th:alt="${photo.description}" />
+	</div>
+	
+	
 </body>
 </html>
