@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<th:block th:fragment="bootstrap">
+	<!-- Required meta tags -->
+	<!-- Bootstrap CSS -->
+	<link th:rel="stylesheet"
+		th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
+	<!-- Bootstrap JS -->
+	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js}"
+		defer></script>
+</th:block>
+</head>
+<body>
+	<div th:each="photo : ${photoList}">[[${photo.getName()}]]</div>
+</body>
+</html>
