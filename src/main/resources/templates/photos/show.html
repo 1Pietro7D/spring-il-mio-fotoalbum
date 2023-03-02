@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <th:block th:replace="~{photos/index :: bootstrap}"></th:block> 
+<body>
+	
+	<h3>[[${photo.title}]]</h3>
+	</br> Category ->
+	<span th:each="category : ${photo.categories}">[[${category.getName()}]], </span> 
+	<img th:src="${photo.url}" th:alt="${photo.description}" />
+	
+	
+	
+</body>
+</html>
