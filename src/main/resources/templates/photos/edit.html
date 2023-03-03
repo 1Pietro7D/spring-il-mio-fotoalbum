@@ -11,7 +11,7 @@
 	
 		<h1>Create Photo</h1>
 		
-		<form th:object="${photo}" th:action="@{/photos/update/{id}(id=${offerta.id})}" method="post">
+		<form th:object="${photo}" th:action="@{/photos/update/{id}(id=${photo.id})}" method="post">
 
 			<div class="form-group">
 				<label for="title">Title</label> <input type="text"

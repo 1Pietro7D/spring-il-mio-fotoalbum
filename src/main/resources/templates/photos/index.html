@@ -16,12 +16,15 @@
 </head>
 <body>
 	<div th:each="photo : ${photoList}">
-	<h3>[[${photo.title}]]</h3>
-	</br> Category ->
-	<span th:each="category : ${photo.categories}">[[${category.getName()}]], </span> 
-	<img th:src="${photo.url}" th:alt="${photo.description}" />
+		<h3>[[${photo.title}]]</h3>
+		</br> Category -> <span th:each="category : ${photo.categories}">[[${category.getName()}]],
+		</span> <img th:src="${photo.url}" th:alt="${photo.description}" />
+		<form th:action="@{'/photos/delete/{id}'(id=${photo.id})}"
+			method="post">
+			<button class="btn btn-danger" type="submit">Cancella</button>
+		</form>
 	</div>
-	
-	
+
+
 </body>
 </html>
