@@ -26,21 +26,21 @@ public class PhotoController {
 	private @Autowired PhotoRepository photoRepository;
 	private @Autowired CategoryRepository categoryRepository;
 
-	 // Variabile di istanza per memorizzare i dati delle foto
-    private List<Photo> photoList;
-    // Metodo privato per recuperare i dati delle foto
-    private void loadPhotos() {
-        photoList = photoRepository.findAll();
-    }
+	// Variabile di istanza per memorizzare i dati delle foto
+	private List<Photo> photoList;
+	// Metodo privato per recuperare i dati delle foto
+	private void loadPhotos() {
+		photoList = photoRepository.findAll();
+	}
 
-    @GetMapping
-    public String index(Model model) {
-        if (photoList == null) {
-            loadPhotos();
-        }
-        model.addAttribute("photoList", photoList);
-        return "photos/index";
-    }
+	@GetMapping
+	public String index(Model model) {
+		if (photoList == null) {
+			loadPhotos();
+		}
+		model.addAttribute("photoList", photoList);
+		return "photos/index";
+	}
 
 	@GetMapping("/{id}")
 	public String show(@PathVariable("id") Long id, Model model) {
@@ -62,10 +62,10 @@ public class PhotoController {
 		if (bindingResult.hasErrors()) {
 			List<Category> categoryList = categoryRepository.findAll();
 			model.addAttribute("categories", categoryList);
-			return "photo/create";
+			return "photos/create";
 		}
 		photoRepository.save(formPhoto);
-		return "redirect";
+		return "redirect:/photos";
 	}
 
 }
