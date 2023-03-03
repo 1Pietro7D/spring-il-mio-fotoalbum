@@ -15,21 +15,21 @@ public class Photo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String title;
-	
+
 	private String description;
-	
+
 	private String url;
-	
+
 	private String tag;
-	
+
 	private Boolean visible;
-	
-	@ManyToMany() // senza mappedBy si dice "owner", il lato dove viene gestita, per cui da pizza aggiungo ingredienr
+
+	@ManyToMany()
 	@JoinTable(name = "category_photo", joinColumns = @JoinColumn(name = "photo_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<Category> categories;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -85,6 +85,4 @@ public class Photo {
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
-	
-	
 }
