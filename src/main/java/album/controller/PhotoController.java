@@ -26,18 +26,9 @@ public class PhotoController {
 	private @Autowired PhotoRepository photoRepository;
 	private @Autowired CategoryRepository categoryRepository;
 
-	// Variabile di istanza per memorizzare i dati delle foto
-	private List<Photo> photoList;
-	// Metodo privato per recuperare i dati delle foto
-	private void loadPhotos() {
-		photoList = photoRepository.findAll();
-	}
-
 	@GetMapping
 	public String index(Model model) {
-		if (photoList == null) {
-			loadPhotos();
-		}
+		List<Photo> photoList = photoRepository.findAll();
 		model.addAttribute("photoList", photoList);
 		return "photos/index";
 	}
@@ -65,6 +56,32 @@ public class PhotoController {
 			return "photos/create";
 		}
 		photoRepository.save(formPhoto);
+		return "redirect:/photos";
+	}
+	
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, Model model) {
+		Photo photo = photoRepository.getReferenceById(id);
+		List<Category> categoryList = categoryRepository.findAll();
+		model.addAttribute("photo", photo);
+		model.addAttribute("categories", categoryList);
+		return "photos/edit";
+	}
+
+	@PostMapping("/update/{id}")
+	public String update(@Valid @ModelAttribute Photo formPhoto, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			List<Category> categoryList = categoryRepository.findAll();
+			model.addAttribute("categories", categoryList);
+			return "photos/update";
+		}
+		photoRepository.save(formPhoto);
+		return "redirect:/photos/" + formPhoto.getId();
+	}
+
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Long id) {
+		photoRepository.deleteById(id);
 		return "redirect:/photos";
 	}
 
