@@ -22,24 +22,50 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/photos")
 public class PhotoController {
-	// iniettiamo automaticamente 
-	
-		private @Autowired PhotoRepository photoRepository;
-		private @Autowired CategoryRepository categoryRepository;
-		
-		@GetMapping
-		public String index(Model modIndex) {
-			List<Photo> photoList = photoRepository.findAll(); 
-			modIndex.addAttribute("photoList", photoList);
-			return "photos/index";		
-		}
-		
-		@GetMapping("/{id}")
-		public String show(@PathVariable("id") Long id, Model model) {
-			Optional<Photo> photo = photoRepository.findById(id); 
-			model.addAttribute("photo", photo.get());
-			return "photos/show";
-		}
+	// iniettiamo automaticamente
+	private @Autowired PhotoRepository photoRepository;
+	private @Autowired CategoryRepository categoryRepository;
 
+	 // Variabile di istanza per memorizzare i dati delle foto
+    private List<Photo> photoList;
+    // Metodo privato per recuperare i dati delle foto
+    private void loadPhotos() {
+        photoList = photoRepository.findAll();
+    }
+
+    @GetMapping
+    public String index(Model model) {
+        if (photoList == null) {
+            loadPhotos();
+        }
+        model.addAttribute("photoList", photoList);
+        return "photos/index";
+    }
+
+	@GetMapping("/{id}")
+	public String show(@PathVariable("id") Long id, Model model) {
+		Optional<Photo> photo = photoRepository.findById(id);
+		model.addAttribute("photo", photo.get());
+		return "photos/show";
+	}
+
+	@GetMapping("/create")
+	public String create(Model model) {
+		List<Category> categoryList = categoryRepository.findAll();
+		model.addAttribute("categories", categoryList);
+		model.addAttribute("photo", new Photo());
+		return "photos/create";
+	}
+
+	@PostMapping("/store")
+	public String store(@Valid @ModelAttribute("photo") Photo formPhoto, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			List<Category> categoryList = categoryRepository.findAll();
+			model.addAttribute("categories", categoryList);
+			return "photo/create";
+		}
+		photoRepository.save(formPhoto);
+		return "redirect";
+	}
 
 }
