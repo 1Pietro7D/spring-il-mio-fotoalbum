@@ -83,7 +83,7 @@ public class Photo {
 		this.tag = tag;
 	}
 
-	public Boolean getVisible() {
+	public Boolean getVisible() {// TODO : lo richiami con isVisible, da testare
 		return visible;
 	}
 
