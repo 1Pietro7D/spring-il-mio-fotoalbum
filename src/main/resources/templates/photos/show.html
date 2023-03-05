@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <title>show</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
- <th:block th:replace="~{photos/index :: bootstrap}"></th:block> 
+<th:block th:replace="~{fragments/fragments :: bootstrap}"></th:block>
 <body>
-	
+	<header th:replace="~{fragments/fragments :: header}"></header>
 	<h3>[[${photo.title}]]</h3>
 	</br> Category ->
 	<span th:each="category : ${photo.categories}">[[${category.getName()}]], </span> 

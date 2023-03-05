@@ -4,27 +4,22 @@
 <meta charset="utf-8">
 <title>index</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<th:block th:fragment="bootstrap">
-	<!-- Required meta tags -->
-	<!-- Bootstrap CSS -->
-	<link th:rel="stylesheet"
-		th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
-	<!-- Bootstrap JS -->
-	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js}"
-		defer></script>
-</th:block>
+<th:block th:replace="~{fragments/fragments :: bootstrap}"></th:block>
 </head>
 <body>
+<header th:replace="~{fragments/fragments :: header}"></header>
 	<div th:each="photo : ${photoList}">
-		<h3>[[${photo.title}]]</h3>
+		<h3><a th:href="@{photos/{id}(id=${photo.id})}">[[${photo.title}]]</a></h3>
 		</br> Category -> <span th:each="category : ${photo.categories}">[[${category.getName()}]],
 		</span> <img th:src="${photo.url}" th:alt="${photo.description}" />
+		<a th:href="@{photos/edit/{id}(id=${photo.id})}">Edit</a>
 		<form th:action="@{'/photos/delete/{id}'(id=${photo.id})}"
 			method="post">
 			<button class="btn btn-danger" type="submit">Cancella</button>
 		</form>
+		
 	</div>
-
+	<a th:href="@{photos/create}">Inserisci una nuova foto</a>
 
 </body>
 </html>
