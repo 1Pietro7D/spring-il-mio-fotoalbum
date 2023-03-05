@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>error 404</title>
+<th:block th:replace="~{frag/fragments :: bootstrap}"></th:block>
+<!-- versione più intuitiva -->
+</head>
+<body>
+
+	<h1>Stai cercando una pagina che non esiste</h1>
+	<p>Bad request 404 : [[${error}]]</p>
+
+	<a th:href="@{/}">Back to home</a>
+
+</body>
+</html>

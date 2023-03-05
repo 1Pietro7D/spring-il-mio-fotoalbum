@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>error 500</title>
+<th:block th:replace="~{frag/fragments :: bootstrap}"></th:block>
+<!-- versione più intuitiva -->
+</head>
+<body>
+
+	<h1>L'elemento che cerchi non esiste</h1>
+	<p>Server error 500 : [[${error}]]</p>
+
+	<a th:href="@{/}">Back to home</a>
+
+</body>
+</html>
