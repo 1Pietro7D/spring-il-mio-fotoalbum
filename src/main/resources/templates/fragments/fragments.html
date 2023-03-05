@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<th:block th:fragment="bootstrap">
+	<!-- Required meta tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Bootstrap CSS -->
+	<link th:rel="stylesheet"
+		th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
+	<!-- Bootstrap JS -->
+	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js}"
+		defer></script>
+</th:block>
+</head>
+<body>
+	<header th:fragment="header" class="header-frag">
+		<nav class="container">
+			<ul class="row">
+				<li class="col-2"><a href="/">Home</a></li>
+				<li class="col-2"><a href="/photos">Photos</a></li>
+				<li class="col-2"><a href="/categories">categories</a></li>
+			</ul>
+		</nav>
+	</header>
+</body>
+</html>
