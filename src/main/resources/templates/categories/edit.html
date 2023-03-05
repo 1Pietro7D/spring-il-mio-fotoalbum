@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>edit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<th:block th:replace="~{fragments/fragments :: bootstrap}"></th:block>
+<body>
+
+	<div class="container mt-4 px-5">
+
+		<h1>Edit Category</h1>
+
+		<form th:object="${category}"
+			th:action="@{/categories/update/{id}(id=${category.id})}"
+			method="post">
+
+			<div class="form-group">
+				<label for="name">Name</label> <input type="text"
+					class="form-control mt-2" id="name" name="name"
+					placeholder="Inserisci il nome della categoria" th:field="*{name}"
+					th:errorClass="is-invalid">
+				<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+					<ul>
+						<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+					</ul>
+				</div>
+				<button type="submit" class="btn btn-primary">Update</button>
+
+			</div>
+		</form>
+
+	</div>
+	<a th:href="@{categories/create}">Crea una nuova categoria</a>
+	<a th:href="@{categories/{id}(id=${category.id})}">Back to [[${category.getName()}]] detail</a>
+	<a href="/categories">Back to category List</a>
+
+
+</body>
+</html>
