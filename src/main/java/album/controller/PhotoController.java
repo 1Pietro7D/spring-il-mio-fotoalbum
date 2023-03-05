@@ -73,7 +73,7 @@ public class PhotoController {
 		if (result.hasErrors()) {
 			List<Category> categoryList = categoryRepository.findAll();
 			model.addAttribute("categories", categoryList);
-			return "photos/update";
+			return "photos/edit";
 		}
 		photoRepository.save(formPhoto);
 		return "redirect:/photos/" + formPhoto.getId();
