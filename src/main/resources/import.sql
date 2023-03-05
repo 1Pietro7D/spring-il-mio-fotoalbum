@@ -9,3 +9,7 @@ INSERT INTO albumfotografico.category_photo(photo_id, category_id) VALUES(1,1);
 INSERT INTO albumfotografico.category_photo(photo_id, category_id) VALUES(2,1);
 INSERT INTO albumfotografico.category_photo(photo_id, category_id) VALUES(3,2);
 INSERT INTO albumfotografico.category_photo(photo_id, category_id) VALUES(3,3);
+INSERT INTO albumfotografico.user(id, username, password) VALUES(1,'user','{bcrypt}$2a$10$4zuKJIl.sBQswhNNxSKSTO2nyLcuVRaLf4iBX4R4/s2mFzE5kCxLu');
+INSERT INTO albumfotografico.role(id, name) VALUES(1,'ADMIN');
+INSERT INTO albumfotografico.role(id, name) VALUES(2, 'USER');
+INSERT INTO albumfotografico.user_roles(user_id, roles_id) VALUES(1,1);
