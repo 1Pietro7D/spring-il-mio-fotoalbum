@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>index</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<th:block th:replace="~{fragments/fragments :: bootstrap}"></th:block>
+</head>
+<body>
+<header th:replace="~{fragments/fragments :: header}"></header>
+	<div th:each="category : ${categories}">
+	<a th:href="@{categories/{id}(id=${category.id})}">[[${category.getName()}]]</a>
+		<a th:href="@{categories/edit/{id}(id=${category.id})}">Edit</a>
+		<form th:action="@{'/categories/delete/{id}'(id=${category.id})}"
+			method="post">
+			<button class="btn btn-danger" type="submit">Cancella</button>
+		</form>
+	</div>
+	<a th:href="@{categories/create}">Crea una nuova categoria</a>
+
+</body>
+</html>
