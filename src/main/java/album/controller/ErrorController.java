@@ -1,4 +1,4 @@
-package org.feb14.pizzeria.controller;
+package album.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
