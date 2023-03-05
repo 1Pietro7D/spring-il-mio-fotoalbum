@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +22,7 @@ public class Category {
 	
 	private String name;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "categories")// cascade = CascadeType.REMOVE -- questo cecchina tutte le Photo
 	@OnDelete(action = OnDeleteAction.CASCADE)//questo cancella da tutte le Photo la Category
 	private List<Photo> photos;
