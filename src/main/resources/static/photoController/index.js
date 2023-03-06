@@ -26,6 +26,13 @@ function photoList() {
 				});
 			});
 
+			const searchInput = document.querySelector('#search-input');
+			searchInput.addEventListener('input', () => {
+				const filterValue = searchInput.value.toLowerCase();
+				console.log(filterValue);
+				filterPhotos(filterValue);
+			});
+
 			photosData.forEach(photo => {
 				const photoCard = `
 			        <div class="my-card" data-category="${photo.category}" id="photo-${photo.id}">
@@ -47,4 +54,17 @@ function photoList() {
 		});
 }
 
+function filterPhotos(filterValue) {
+	const photoListContainer = document.querySelector('#photo-list');
+	const photos = photoListContainer.querySelectorAll('.my-card');
 
+	photos.forEach(photo => {
+		const title = photo.querySelector('.card-title').textContent;
+		const tags = photo.querySelector('span').textContent;
+		if (title.includes(filterValue) || tags.includes(filterValue)) {
+			photo.classList.remove('dis-none');
+		} else {
+			photo.classList.add('dis-none');
+		}
+	});
+}
