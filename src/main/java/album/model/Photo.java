@@ -2,6 +2,8 @@ package album.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@JsonSerialize
 public class Photo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
