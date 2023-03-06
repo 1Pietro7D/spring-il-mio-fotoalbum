@@ -59,8 +59,9 @@ function filterPhotos(filterValue) {
 	const photos = photoListContainer.querySelectorAll('.my-card');
 
 	photos.forEach(photo => {
-		const title = photo.querySelector('.card-title').textContent;
-		const tags = photo.querySelector('span').textContent;
+		const title = photo.querySelector('.card-title').textContent.toLowerCase();
+		console.log(title);
+		const tags = photo.querySelector('span').textContent.toLowerCase();
 		if (title.includes(filterValue) || tags.includes(filterValue)) {
 			photo.classList.remove('dis-none');
 		} else {
