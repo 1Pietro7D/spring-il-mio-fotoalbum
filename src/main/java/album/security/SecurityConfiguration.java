@@ -39,7 +39,10 @@ public class SecurityConfiguration {
 				.and().formLogin().and().logout().and().exceptionHandling()
 
 				// VIEW HTML PERSONALIZZATA PER L'ACCESSO NEGATO
-				.accessDeniedPage("/access-denied.html");
+				.accessDeniedPage("/access-denied.html")
+		
+//				.and().csrf().disable() soluzione mauca 
+				;
 
 		return http.build();
 	}
