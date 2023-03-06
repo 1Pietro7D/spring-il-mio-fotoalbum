@@ -41,23 +41,36 @@ public class PhotoApiController {
 	CommentRepository commentRepository;
 
 	@GetMapping
-	public ResponseEntity<Map<String, List<?>>> index(@RequestParam(required = false) String title) {
-		List<Photo> photos;
-		if (title != null && !title.isBlank()) {
-			photos = photoRepository.findByTitleContainingIgnoreCase(title);
-		} else {
-			photos = photoRepository.findAll();
-		}
-		List<Category> categories = categoryRepository.findAll();
-		// filtra le foto per isVisible = true
-		List<Photo> visiblePhotos = photos.stream().filter(Photo::getVisible).collect(Collectors.toList());
-		Map<String, List<?>> result = new HashMap<>();
-		result.put("photos", visiblePhotos);
-		result.put("categories", categories);
-		if (result.size() <= 0)
-			return new ResponseEntity<Map<String, List<?>>>(HttpStatus.NO_CONTENT);
-		else
-			return new ResponseEntity<Map<String, List<?>>>(result, HttpStatus.OK);
+	public ResponseEntity<Map<String, List<?>>> index(@RequestParam(required = false) String title, @RequestParam(required = false) Long categoryId) {
+	    List<Photo> photos;
+	    if (title != null && !title.isBlank()) {
+	        photos = photoRepository.findByTitleContainingIgnoreCase(title);
+	    } else {
+	        photos = photoRepository.findAll();
+	    }
+	    List<Category> categories = categoryRepository.findAll();
+
+	    // filtra le foto per isVisible = true e per categoria (se specificata)
+	    List<Photo> visiblePhotos;
+	    if (categoryId != null && categoryId > 0) {
+	        visiblePhotos = photos.stream()
+	                .filter(p -> p.getVisible() && ((Category) p.getCategories()).getId() == categoryId)
+	                .collect(Collectors.toList());
+	    } else {
+	        visiblePhotos = photos.stream()
+	                .filter(Photo::getVisible)
+	                .collect(Collectors.toList());
+	    }
+
+	    Map<String, List<?>> result = new HashMap<>();
+	    result.put("photos", visiblePhotos);
+	    result.put("categories", categories);
+
+	    if (result.size() <= 0) {
+	        return new ResponseEntity<Map<String, List<?>>>(HttpStatus.NO_CONTENT);
+	    } else {
+	        return new ResponseEntity<Map<String, List<?>>>(result, HttpStatus.OK);
+	    }
 	}
 
 	@GetMapping("/{id}")
