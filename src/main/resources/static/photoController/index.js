@@ -47,29 +47,4 @@ function photoList() {
 		});
 }
 
-function searchPhotos() {
-	const titleInput = document.querySelector('#search-input');
-	const categorySelect = document.querySelector('#category-select');
-	const titleFilter = titleInput.value.toUpperCase();
-	const categoryFilter = categorySelect.value.toUpperCase();
-	const photoListContainer = document.querySelector('#photo-list');
-	const photos = photoListContainer.querySelectorAll('.my-card');
 
-	photos.forEach((photo) => {
-		const name = photo.querySelector('.card-title a').textContent.toUpperCase();
-		const tag = photo.querySelector('.tags').textContent.toUpperCase();
-		const category = photo.dataset.category.toUpperCase();
-
-		if (categoryFilter === '' || category === categoryFilter) {
-			if (name.includes(titleFilter) || tag.includes(titleFilter)) {
-				photo.classList.remove('hidden');
-			} else {
-				photo.classList.add('hidden');
-			}
-		}
-	});
-}
-
-document.querySelector('#search-input').addEventListener('input', () => {
-	searchPhotos();
-});
