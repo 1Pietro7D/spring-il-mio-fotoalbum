@@ -51,12 +51,13 @@
 				<h4>Visibility</h4>
 				<div class="form-check">
 					<input type="radio" class="form-check-input" id="visibleYes"
-						name="isVisible" value="true" checked> <label
+					
+						name="visible" th:value="true" checked th:field="*{visible}"> <label
 						class="form-check-label" for="visibleYes">Yes</label>
 				</div>
 				<div class="form-check">
 					<input type="radio" class="form-check-input" id="visibleNo"
-						name="isVisible" value="false"><label
+						name="visible" th:value="false" th:field="*{visible}"><label
 						class="form-check-label" for="visibleNo">No</label>
 				</div>
 			</div>
