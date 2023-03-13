@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>error 400</title>
+<th:block th:replace="~{fragments/fragments :: bootstrap}"></th:block>
+
+</head>
+<body>
+
+	<h1>Non hai l'autorizzazione a stare qui</h1>
+	<p>Bad request 403 : [[${error}]]</p>
+
+	<a th:href="@{/}">Back to home</a>
+
+</body>
+</html>
