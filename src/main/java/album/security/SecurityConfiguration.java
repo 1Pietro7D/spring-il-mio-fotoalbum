@@ -31,7 +31,7 @@ public class SecurityConfiguration {
         .and()
         .addFilterAfter(new CsrfFilter(CookieCsrfTokenRepository.withHttpOnlyFalse()), CsrfFilter.class)
         .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST).permitAll()
+                .requestMatchers(HttpMethod.POST, "/apiPhotos/**").permitAll()
                 .requestMatchers("/photos/edit", "/photos/edit/**", "/photo/create", "/photo/create/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/photos/**").hasAuthority("ADMIN")
                 .requestMatchers("/categories", "/categories/**").hasAuthority("ADMIN")
