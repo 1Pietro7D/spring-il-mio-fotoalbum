@@ -3,16 +3,28 @@ console.log("Show: JS OK!");
 const urlParams = new URLSearchParams(window.location.search);
 const photoId = parseInt(urlParams.get('id'));
 
+// Recupera il token CSRF dal cookie al caricamento della pagina
+const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+
+console.log("token: ", csrfToken)
+
+// Aggiungi il token a ogni richiesta AJAX
+axios.interceptors.request.use(function (config) {
+	config.headers['X-XSRF-TOKEN'] = csrfToken;
+	return config;
+});
+
+
 showPhoto(photoId);
 showComments(photoId);
 
 function showPhoto(photoId) {
-  axios.get(`http://localhost:8080/api/photos/${photoId}`)
-    .then((res) => {
-      const photo = res.data;
-      const photoContainer = document.querySelector('#photo-details');
+	axios.get(`http://localhost:8080/api/photos/${photoId}`)
+		.then((res) => {
+			const photo = res.data;
+			const photoContainer = document.querySelector('#photo-details');
 
-      const photoCard = `
+			const photoCard = `
       <div class="card">
         <img src="${photo.url}" alt="${photo.title}">
         <div>
@@ -25,73 +37,73 @@ function showPhoto(photoId) {
         </div>
       </div>
     `;
-      photoContainer.insertAdjacentHTML('beforeend', photoCard);
-    })
-    .catch((err) => {
-      console.error('Errore nella richiesta', err);
-      alert('Errore durante la richiesta!');
-    });
+			photoContainer.insertAdjacentHTML('beforeend', photoCard);
+		})
+		.catch((err) => {
+			console.error('Errore nella richiesta', err);
+			alert('Errore durante la richiesta!');
+		});
 }
 
 // RECUPERO COMMENTI
 function showComments(photoId) {
-  axios.get(`http://localhost:8080/api/photos/${photoId}`)
-    .then((res) => {
-      const comments = res.data.comments;
-      const commentContainer = document.querySelector('#comments');
+	axios.get(`http://localhost:8080/api/photos/${photoId}`)
+		.then((res) => {
+			const comments = res.data.comments;
+			const commentContainer = document.querySelector('#comments');
 
-      if (comments.length > 0) {
-        commentContainer.innerHTML = '<h3>Comments:</h3>';
+			if (comments.length > 0) {
+				commentContainer.innerHTML = '<h3>Comments:</h3>';
 
-        comments.forEach((comment) => {
-          const commentDiv = document.createElement('div');
-          commentDiv.classList.add('comment');
-          commentContainer.appendChild(commentDiv);
+				comments.forEach((comment) => {
+					const commentDiv = document.createElement('div');
+					commentDiv.classList.add('comment');
+					commentContainer.appendChild(commentDiv);
 
-          const username = document.createElement('span');
-          username.classList.add('username');
-          username.innerHTML = `Username: ${comment.username}`;
-          commentDiv.appendChild(username);
+					const username = document.createElement('span');
+					username.classList.add('username');
+					username.innerHTML = `Username: ${comment.username}`;
+					commentDiv.appendChild(username);
 
-          const content = document.createElement('div');
-          content.classList.add('content');
-          content.innerHTML = `Comment: ${comment.content}`;
-          commentDiv.appendChild(content);
+					const content = document.createElement('div');
+					content.classList.add('content');
+					content.innerHTML = `Comment: ${comment.content}`;
+					commentDiv.appendChild(content);
 
-          const hr = document.createElement('hr');
-          commentDiv.appendChild(hr);
-        });
-      } else {
-        commentContainer.innerHTML = '<p>No comments yet.</p>';
-      }
-    })
-    .catch((err) => {
-      console.error('Errore nella richiesta', err);
-      alert('Errore durante la richiesta!');
-    });
+					const hr = document.createElement('hr');
+					commentDiv.appendChild(hr);
+				});
+			} else {
+				commentContainer.innerHTML = '<p>No comments yet.</p>';
+			}
+		})
+		.catch((err) => {
+			console.error('Errore nella richiesta', err);
+			alert('Errore durante la richiesta!');
+		});
 }
 
 
 
 // AGGIUNTA COMMENTO
 function addComment(photoId) {
-  const username = document.querySelector('#username').value;
-  const content = document.querySelector('#content').value;
+	const username = document.querySelector('#username').value;
+	const content = document.querySelector('#content').value;
 
-  axios.post(`http://localhost:8080/api/photos/${photoId}/comments`, {
-    username: username,
-    content: content
-  })
-    .then((res) => {
-      console.log(res.data);
-      document.querySelector('#username').value = '';
-      document.querySelector('#content').value = '';
-      showComments(photoId);
-    })
-    .catch((err) => {
-      console.error('Errore nella richiesta', err);
-      alert('Errore durante la richiesta!');
-    });
+	axios.post(`http://localhost:8080/api/photos/${photoId}/comments`, {
+		username: username,
+		content: content
+	})
+		.then((res) => {
+			console.log(res.data);
+			document.querySelector('#username').value = '';
+			document.querySelector('#content').value = '';
+			showComments(photoId);
+		})
+		.catch((err) => {
+			console.error('Errore nella richiesta', err);
+			alert('Errore durante la richiesta!');
+		});
 }
 
 

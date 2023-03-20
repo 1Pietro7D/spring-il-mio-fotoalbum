@@ -9,9 +9,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +31,8 @@ import album.model.Photo;
 import album.repository.CategoryRepository;
 import album.repository.CommentRepository;
 import album.repository.PhotoRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
@@ -39,6 +45,20 @@ public class PhotoApiController {
 	CategoryRepository categoryRepository;
 	@Autowired
 	CommentRepository commentRepository;
+	
+	 private CsrfTokenRepository csrfTokenRepository() {
+	        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+	        repository.setSessionAttributeName("_csrf");
+	        return repository;
+	    }
+
+	    @ModelAttribute
+	    public void addCsrfToken(HttpServletRequest request, HttpServletResponse response) {
+	        CsrfToken csrfToken = csrfTokenRepository().loadToken(request);
+	        if (csrfToken != null) {
+	            response.setHeader("X-CSRF-TOKEN", csrfToken.getToken());
+	        }
+	    }
 
 	@GetMapping
 	public ResponseEntity<Map<String, List<?>>> index(@RequestParam(required = false) String title, @RequestParam(required = false) Long categoryId) {
