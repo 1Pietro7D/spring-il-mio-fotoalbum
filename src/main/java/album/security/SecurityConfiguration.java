@@ -9,27 +9,20 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 	
-	@Bean
-	CsrfFilter csrfFilter() {
-	    CsrfFilter csrfFilter = new CsrfFilter(new CookieCsrfTokenRepository());
-	    return csrfFilter;
-	}
+	
 
 	@Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         String[] allRoles = { "USER", "ADMIN" };
 
-        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        http.csrf()
         .and()
-        .addFilterAfter(new CsrfFilter(CookieCsrfTokenRepository.withHttpOnlyFalse()), CsrfFilter.class)
         .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/apiPhotos/**").permitAll()
                 .requestMatchers("/photos/edit", "/photos/edit/**", "/photo/create", "/photo/create/**").hasAuthority("ADMIN")

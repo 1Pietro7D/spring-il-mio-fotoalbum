@@ -1,4 +1,4 @@
-package album.security;
+/*package album.security;
 import java.io.IOException;
 
 import org.springframework.security.web.server.csrf.CsrfToken;
@@ -27,4 +27,4 @@ public class CsrfHeaderFilter extends OncePerRequestFilter {
     }
     filterChain.doFilter(request, response);
   }
-}
+}*/

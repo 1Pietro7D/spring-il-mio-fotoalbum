@@ -3,17 +3,18 @@ console.log("Show: JS OK!");
 const urlParams = new URLSearchParams(window.location.search);
 const photoId = parseInt(urlParams.get('id'));
 
-// Recupera il token CSRF dal cookie al caricamento della pagina
-const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
-console.log("token: ", csrfToken)
+const valueToken = document.getElementById("x").value;
+const nameToken = document.getElementById("xh").value;
 
 // Aggiungi il token a ogni richiesta AJAX
 axios.interceptors.request.use(function (config) {
-	config.headers['X-XSRF-TOKEN'] = csrfToken;
-	return config;
+  if (config.method === 'get') {
+    return config; // restituisce la configurazione senza modifiche
+  }
+  config.headers[nameToken] = valueToken;
+  return config;
 });
-
 
 showPhoto(photoId);
 showComments(photoId);
@@ -105,5 +106,4 @@ function addComment(photoId) {
 			alert('Errore durante la richiesta!');
 		});
 }
-
 
