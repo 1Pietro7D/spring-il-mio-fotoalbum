@@ -71,7 +71,7 @@ public class PhotoApiController {
 	        return new ResponseEntity<Map<String, List<?>>>(HttpStatus.NO_CONTENT);
 	    } else {
 	        return new ResponseEntity<Map<String, List<?>>>(result, HttpStatus.OK);
-	    }
+	    }// ritorna un pacchetto dati formato da categories e foto visibili
 	}
 
 	@GetMapping("/{id}")
