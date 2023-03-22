@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/categories", "/categories/**").hasAuthority("ADMIN")
                 .requestMatchers("/photos", "/photos/**").hasAuthority("ADMIN")
                 .anyRequest().permitAll()
-                .and().formLogin().and().logout().and().exceptionHandling();
+                .and().formLogin().and().logout().logoutSuccessUrl("/").and().exceptionHandling();
         
         return http.build();
     }
