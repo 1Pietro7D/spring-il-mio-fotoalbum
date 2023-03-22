@@ -1,71 +1,77 @@
 console.log("Index: JS OK!");
 
-photoList();
+const photoListContainer = document.querySelector('#photo-list');
+const categorySelect = document.querySelector('#category-select');
+const searchInput = document.querySelector('#search-input');
 
-function photoList() {
-	const photoListContainer = document.querySelector('#photo-list');
-	const categorySelect = document.querySelector('#category-select');
+axios.get('http://localhost:8080/api/photos')
+	.then((res) => {
+		const photosData = res.data.photos;
+		const categories = res.data.categories;
 
-	axios.get('http://localhost:8080/api/photos')
-		.then((res) => {
-			const photosData = res.data.photos;
-			const categories = res.data.categories;
-			categories.forEach(category => {
-				const option = `<option value="${category.name}">${category.name}</option>`;
-				categorySelect.insertAdjacentHTML('beforeend', option);
-			});
+		insertCategoriesIntoSelect(categories);
 
-			categorySelect.addEventListener('change', () => {
-				const selectedCategory = categorySelect.value;
-				photosData.forEach(photo => {
-					if (selectedCategory === '' || photo.categories.some(category => category.name === selectedCategory)) {
-						photoListContainer.querySelector(`#photo-${photo.id}`).classList.remove('d-none');
-					} else {
-						photoListContainer.querySelector(`#photo-${photo.id}`).classList.add('d-none');
-					}
-				});
-			});
-
-			const searchInput = document.querySelector('#search-input');
-			searchInput.addEventListener('input', () => {
-				const filterValue = searchInput.value.toLowerCase();
-				console.log(filterValue);
-				filterPhotos(filterValue);
-			});
-
-			photosData.forEach(photo => {
-				const photoCard = `
-			        <div class="my-card" data-category="${photo.category}" id="photo-${photo.id}">
-			        	<a href="/apiPhotos/show?id=${photo.id}">
-			        		<img src="${photo.url}" class="card-img-top" alt="${photo.description}">
-			        		<div class="card-body">
-			        		<h5 class="card-title">${photo.title}</h5>
-			        		<p class="card-text">${photo.description}</p>
-			        		<p>Tags:<span>${photo.tag}</span></p>   		
-			        	</a>
-			        </div>
-			      `;
-				photoListContainer.insertAdjacentHTML('beforeend', photoCard);
-			});
-		})
-		.catch((err) => {
-			console.error('Errore nella richiesta', err);
-			alert('Errore durante la richiesta!');
+		// TODO : il controller già dispone dei filtri, basta aggiungere "categoryId=1&title=my%20title" nella chiamata, %20 per gli spazi vuoti
+		categorySelect.addEventListener('change', () => {
+			filterPhotosByCategory(photosData, categorySelect.value);
 		});
+
+		searchInput.addEventListener('input', () => {
+			filterPhotosBySearchInput(photosData, searchInput.value.toLowerCase());
+		});
+
+		insertPhotosIntoContainer(photosData);
+	})
+	.catch((err) => {
+		console.error('Errore nella richiesta', err);
+		alert('Errore durante la richiesta!');
+	});
+
+function insertCategoriesIntoSelect(categories) {
+	categories.forEach(category => {
+		const option = `<option value="${category.name}">${category.name}</option>`;
+		categorySelect.insertAdjacentHTML('beforeend', option);
+	});
 }
 
-function filterPhotos(filterValue) {
-	const photoListContainer = document.querySelector('#photo-list');
-	const photos = photoListContainer.querySelectorAll('.my-card');
-
-	photos.forEach(photo => {
-		const title = photo.querySelector('.card-title').textContent.toLowerCase();
-		console.log(title);
-		const tags = photo.querySelector('span').textContent.toLowerCase();
-		if (title.includes(filterValue) || tags.includes(filterValue)) {
-			photo.classList.remove('dis-none');
+function filterPhotosByCategory(photosData, category) {
+	photosData.forEach(photo => {
+		const photoElement = document.querySelector(`#photo-${photo.id}`);
+		if (category === '' || photo.categories.some(cat => cat.name === category)) {
+			photoElement.classList.remove('d-none');
 		} else {
-			photo.classList.add('dis-none');
+			photoElement.classList.add('d-none');
 		}
+	});
+}
+
+function filterPhotosBySearchInput(photosData, filterValue) {
+	photosData.forEach(photo => {
+		const photoElement = document.querySelector(`#photo-${photo.id}`);
+		const title = photo.title.toLowerCase();
+		const tags = photo.tag.toLowerCase();
+		if (title.includes(filterValue) || tags.includes(filterValue)) {
+			photoElement.classList.remove('dis-none');
+		} else {
+			photoElement.classList.add('dis-none');
+		}
+	});
+}
+
+function insertPhotosIntoContainer(photosData) {
+	photosData.forEach(photo => {
+		const photoCard = `
+            <div class="my-card" data-category="${photo.category}" id="photo-${photo.id}">
+                <a href="/apiPhotos/show?id=${photo.id}">
+                    <img src="${photo.url}" class="card-img-top" alt="${photo.description}">
+                    <div class="card-body">
+                        <h5 class="card-title">${photo.title}</h5>
+                        <p class="card-text">${photo.description}</p>
+                        <p>Tags:<span>${photo.tag}</span></p>
+                    </div>
+                </a>
+            </div>
+        `;
+		photoListContainer.insertAdjacentHTML('beforeend', photoCard);
 	});
 }
