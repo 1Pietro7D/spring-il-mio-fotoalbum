@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import album.model.Category;
 import album.repository.CategoryRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -50,29 +53,38 @@ public class CategoryController {
 			return "photos/create";
 		}
 		categoryRepository.save(formCategory);
-		return "redirect:/categories";
+		return "redirect:/categories/" + formCategory.getId();
 	}
 
 	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, Model model) {
+	public String edit(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String referer = request.getHeader("referer");
+		session.setAttribute("referer", referer);
 		Category category = categoryRepository.getReferenceById(id);
 		model.addAttribute("category", category);
+		if (referer != null)
+			model.addAttribute("referer", referer);
+		else
+			model.addAttribute("referer", "/categories/" + id);
 		return "categories/edit";
 	}
 
 	@PostMapping("/update/{id}")
-	public String update(@Valid @ModelAttribute Category formCategory, BindingResult result, Model model) {
+	public String update(@Valid @ModelAttribute Category formCategory, BindingResult result, HttpSession session) {
 		if (result.hasErrors()) {
 			return "categories/edit";
 		}
 		categoryRepository.save(formCategory);
-		return "redirect:/categories/" + formCategory.getId();
+		String referer = (String) session.getAttribute("referer");
+		return "redirect:" + referer;
 	}
 
 	@PostMapping("/delete/{id}")
-	public String delete(@PathVariable("id") Long id) {
+	public String delete(@PathVariable("id") Long id, HttpServletRequest request) {
 		categoryRepository.deleteById(id);
-		return "redirect:/categories";
+		String referer = request.getHeader(HttpHeaders.REFERER);
+		return "redirect:" + referer;
 	}
 
 }
