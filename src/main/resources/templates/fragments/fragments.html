@@ -2,16 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
+<th:block th:fragment="token">
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</th:block>
+
 <th:block th:fragment="bootstrap">
 	<!-- Required meta tags -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Bootstrap CSS -->
-	<link th:rel="stylesheet"
-		th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
-	<!-- Bootstrap JS -->
-	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js}"
-		defer></script>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+		integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+		crossorigin="anonymous" />
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+		crossorigin="anonymous" defer></script>
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+
+	<link rel="stylesheet" href="css/generics.css">
+
 </th:block>
 
 </head>
@@ -20,18 +37,20 @@
 		<nav class="container">
 			<ul class="row">
 				<li class="col-2"><a href="/">Home</a></li>
-				<li th:if="${#authentication.authorities[0].toString() == 'ADMIN' }" class="col-2"><a href="/photos">AD Photos</a></li>
-				<li th:if="${#authentication.authorities[0].toString() == 'ADMIN' }" class="col-2"><a href="/categories">AD categories</a></li>
+				<li th:if="${#authentication.authorities[0].toString() == 'ADMIN' }"
+					class="col-2"><a href="/photos">AD Photos</a></li>
+				<li th:if="${#authentication.authorities[0].toString() == 'ADMIN' }"
+					class="col-2"><a href="/categories">AD categories</a></li>
 				<li class="col-2"><a href="/apiPhotos">US Photos</a></li>
 				<li class="col-2"><a
 					th:href="${#authentication.principal != 'anonymousUser' ? '/logout' : '/login'}">
-						[[${#authentication.principal != 'anonymousUser' ? 'Logout' : 'Login'}]] </a>
-						</li>
+						[[${#authentication.principal != 'anonymousUser' ? 'Logout' :
+						'Login'}]] </a></li>
 			</ul>
-			
+
 			<!-- div>[[${#authentication.authorities[0].getClass()}]]</div>
 			<div>è [[${#authentication.authorities[0]}]] ? -> [[${#authentication.authorities[0].toString() == 'ADMIN' ? 'true' : 'false' }]]</div-->
-			
+
 		</nav>
 	</header>
 </body>
