@@ -1,7 +1,7 @@
-INSERT INTO albumfotografico.photo(title, description, tag, url, visible) VALUES('Monte Bianco', "la montagna più bianca", "montagna", 'https://picsum.photos/200/150', true);
-INSERT INTO albumfotografico.photo(title, description, tag, url, visible) VALUES('Zozzomarina', 'il mare pulito', "mare", 'https://picsum.photos/200/150', true);
-INSERT INTO albumfotografico.photo(title, description, tag, url, visible) VALUES('New York', 'la grande mela', "metropoly", 'https://picsum.photos/200/150', true);
-INSERT INTO albumfotografico.photo(title, description, tag, url, visible) VALUES('New Ciao', 'la grande banana', "metro", 'https://picsum.photos/200/150', true);
+INSERT INTO albumfotografico.photo(title, description, tag, url, visible) VALUES('Monte Bianco', "la montagna più bianca", "montagna", 'https://picsum.photos/id/29/200/150', true);
+INSERT INTO albumfotografico.photo(title, description, tag, url, visible) VALUES('Zozzomarina', 'il mare pulito', "mare", 'https://picsum.photos/id/16/200/150', true);
+INSERT INTO albumfotografico.photo(title, description, tag, url, visible) VALUES('New York', 'la grande mela', "metropoly", 'https://picsum.photos/id/43/200/150', true);
+INSERT INTO albumfotografico.photo(title, description, tag, url, visible) VALUES('Grecia', 'grecia', "mare", 'https://picsum.photos/id/49/200/150', true);
 INSERT INTO albumfotografico.category(name) VALUES('viaggiare');
 INSERT INTO albumfotografico.category(name) VALUES('città');
 INSERT INTO albumfotografico.category(name) VALUES('moda');
