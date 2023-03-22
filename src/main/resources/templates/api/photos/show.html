@@ -3,30 +3,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<th:block th:replace="~{fragments/fragments :: token}"></th:block>
     <th:block th:replace="~{fragments/fragments :: bootstrap}"></th:block>
 	
-    <!--link rel="stylesheet" href="css/style.css" /-->
-	
-	 <!-- axios -->
+	<!-- axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
     
     <!---- ControllerPhoto ---->
-    <script type="text/javascript" src="/photoController/show.js" defer></script>
-    
+    <script type="text/javascript" src="/photoController/show.js" defer></script>   
     <!---- /ControllerPhoto ---->
-   
-
-   
-    <title>Photo Detail</title>
-    </head>
-
-
+     
+    <title>Blog Detail</title>
+</head>
 <body>
+<header th:replace="~{fragments/fragments :: header}"></header>
 	<div class="container py-5">
         <h1>Photo Details</h1>
         <div id="photo-details"></div>

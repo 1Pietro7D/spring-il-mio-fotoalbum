@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
 	<th:block th:fragment="token">
 		<meta name="_csrf" th:content="${_csrf.token}" />
 		<meta name="_csrf_header" th:content="${_csrf.headerName}" />
@@ -9,7 +8,9 @@
 
 	<th:block th:fragment="bootstrap">
 		<!-- Required meta tags -->
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="UTF-8" />
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 		<link rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
@@ -27,19 +28,19 @@
 		<link rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
 	
-		<link rel="stylesheet" href="css/generics.css">
+		<link rel="stylesheet" href="/css/generics.css">
 	</th:block>
 </head>
 <body>
 	<header th:fragment="header" class="header-frag">
-		<nav class="container">
+		<nav class="container p-2">
 			<ul class="row">
-				<li class="col-2"><a href="/">Home</a></li>
+				<li class="col-2"><a href="/"><i class="bi bi-house-fill"></i></a></li>
 				<li th:if="${#authentication.authorities[0].toString() == 'ADMIN' }"
-					class="col-2"><a href="/photos">AD Photos</a></li>
+					class="col-2"><a href="/photos">ADMIN Photos</a></li>
 				<li th:if="${#authentication.authorities[0].toString() == 'ADMIN' }"
-					class="col-2"><a href="/categories">AD categories</a></li>
-				<li class="col-2"><a href="/apiPhotos">US Photos</a></li>
+					class="col-2"><a href="/categories">ADMIN categories</a></li>
+				<li class="col-2"><a href="/apiPhotos">Photos Gallery</a></li>
 				<li class="col-2"><a
 					th:href="${#authentication.principal != 'anonymousUser' ? '/logout' : '/login'}">
 						[[${#authentication.principal != 'anonymousUser' ? 'Logout' :

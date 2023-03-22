@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<title>index</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <th:block th:replace="~{fragments/fragments :: bootstrap}"></th:block>
+<title>index category</title>
 </head>
 <body>
 <header th:replace="~{fragments/fragments :: header}"></header>
-	<div th:each="category : ${categories}">
-	<a th:href="@{categories/{id}(id=${category.id})}">[[${category.getName()}]]</a>
-		<a th:href="@{categories/edit/{id}(id=${category.id})}">Edit</a>
-		<form th:action="@{'/categories/delete/{id}'(id=${category.id})}"
-			method="post">
-			<button class="btn btn-danger" type="submit">Cancella</button>
-		</form>
+	
+	<a class="btn btn-success mb-2" th:href="@{categories/create}">Crea una nuova categoria</a>
+	
+	<div class="container">
+		<ul>
+			<li class="row py-1" th:each="category : ${categories}">
+				<a class="col-2" th:href="@{categories/{id}(id=${category.id})}">[[${category.getName()}]]</a>
+				<a class="btn btn-warning col-2" th:href="@{categories/edit/{id}(id=${category.id})}">Edit</a>
+				<form class="col-2" th:action="@{'/categories/delete/{id}'(id=${category.id})}"
+					method="post">
+					<button class="btn btn-danger" type="submit">Cancella</button>
+				</form>
+			</li>
+	</ul>
 	</div>
-	<a th:href="@{categories/create}">Crea una nuova categoria</a>
-
 </body>
 </html>
