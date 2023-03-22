@@ -6,13 +6,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <th:block th:replace="~{fragments/fragments :: bootstrap}"></th:block>
 <body>
+	<!-- navbar fragments -->
 	<header th:replace="~{fragments/fragments :: header}"></header>
+	<!-- navbar fragments -->
 	<h3>[[${photo.title}]]</h3>
-	</br> Category ->
-	<span th:each="category : ${photo.categories}">[[${category.getName()}]], </span> 
+	<h4>Category</h4>
+	<ul class="container">
+		<li class="row" th:each="category : ${photo.categories}">
+		<span class=col-2>[[${category.getName()}]]</span>
+			<a class="btn btn-warning col-2"
+			th:href="@{/categories/edit/{id}(id=${category.id})}">Edit</a>
+			<form class="col-2" th:action="@{'/categories/delete/{id}'(id=${category.id})}"
+				method="post">
+				<button class="btn btn-danger" type="submit">Cancella</button>
+			</form>
+		</li>
+	</ul>
+
 	<img th:src="${photo.url}" th:alt="${photo.description}" />
-	
-	
-	
+	<form th:action="@{'/photos/delete/{id}'(id=${photo.id})}"
+		method="post">
+		<button class="btn btn-danger" type="submit">Cancella</button>
+	</form>
+
+	<a class="btn btn-success" th:href="@{photos/create}">
+		Inserisciunanuova foto</a>
+
+
 </body>
 </html>

@@ -8,18 +8,18 @@
 </head>
 <body>
 <header th:replace="~{fragments/fragments :: header}"></header>
+	<a class="btn btn-success" th:href="@{photos/create}">Inserisci una nuova foto</a>
+	
 	<div th:each="photo : ${photoList}">
 		<h3><a th:href="@{photos/{id}(id=${photo.id})}">[[${photo.title}]]</a></h3>
-		</br> Category -> <span th:each="category : ${photo.categories}">[[${category.getName()}]],
 		</span> <img th:src="${photo.url}" th:alt="${photo.description}" />
-		<a th:href="@{photos/edit/{id}(id=${photo.id})}">Edit</a>
+		<a class="btn btn-warning" th:href="@{photos/edit/{id}(id=${photo.id})}">Edit</a>
 		<form th:action="@{'/photos/delete/{id}'(id=${photo.id})}"
 			method="post">
 			<button class="btn btn-danger" type="submit">Cancella</button>
 		</form>
 		
 	</div>
-	<a th:href="@{photos/create}">Inserisci una nuova foto</a>
-
+	
 </body>
 </html>

@@ -8,14 +8,16 @@
 <body>
 	<header th:replace="~{fragments/fragments :: header}"></header>
 	<h3>[[${category.name}]]</h3>
-	<a th:href="@{/categories/edit/{id}(id=${category.id})}">Edit</a>
+	<a class="btn btn-warning"
+		th:href="@{/categories/edit/{id}(id=${category.id})}">Edit</a>
 	<form th:action="@{'/categories/delete/{id}'(id=${category.id})}"
-			method="post">
-			<button class="btn btn-danger" type="submit">Cancella</button>
-		</form>
-	<a href="/categories">Back to category List</a>
+		method="post">
+		<button class="btn btn-danger" type="submit">Cancella</button>
+	</form>
 	
-	
-	
+	<a class="btn btn-info" href="/categories">Back to category List</a>
+
+
+
 </body>
 </html>
