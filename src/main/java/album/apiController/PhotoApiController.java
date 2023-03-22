@@ -55,7 +55,7 @@ public class PhotoApiController {
 	    List<Photo> visiblePhotos;
 	    if (categoryId != null && categoryId > 0) {
 	        visiblePhotos = photos.stream()
-	                .filter(p -> p.getVisible() && ((Category) p.getCategories()).getId() == categoryId)
+	        		.filter(p -> p.getVisible() && p.getCategories().stream().anyMatch(c -> c.getId() == categoryId))
 	                .collect(Collectors.toList());
 	    } else {
 	        visiblePhotos = photos.stream()
