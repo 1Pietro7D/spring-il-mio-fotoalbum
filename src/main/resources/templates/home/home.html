@@ -8,5 +8,16 @@
 </head>
 <body>
 	<header th:replace="~{fragments/fragments :: header}"></header>
+
+	<div th:switch="${#authentication.authorities[0].toString()}">
+		<h1 th:case="'ADMIN'">Welcome back Administrator</h1>
+		<h1 th:case="'USER'">Welcome back
+			[[${#authentication.principal.username}]]</h1>
+		<div th:case="*">
+			<h1>Welcome</h1>
+			<p>If you want to be able to insert new content or be able to
+				comment on the photos, remember to log-in</p>
+		</div>
+	</div>
 </body>
 </html>
