@@ -58,15 +58,16 @@ public class CategoryController {
 
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
+//		AddDefaultCharsetFilter referer
 		HttpSession session = request.getSession();
 		String referer = request.getHeader("referer");
-		session.setAttribute("referer", referer);
+		if (referer != null)
+			session.setAttribute("referer", referer);
+		else
+			session.setAttribute("referer", "/categories/" + id);
+//		AddDefaultCharsetFilter categories
 		Category category = categoryRepository.getReferenceById(id);
 		model.addAttribute("category", category);
-		if (referer != null)
-			model.addAttribute("referer", referer);
-		else
-			model.addAttribute("referer", "/categories/" + id);
 		return "categories/edit";
 	}
 
