@@ -12,6 +12,7 @@ axios.get('http://localhost:8080/api/photos')
 		insertCategoriesIntoSelect(categories);
 
 		// TODO : il controller già dispone dei filtri, basta aggiungere "categoryId=1&title=my%20title" nella chiamata, %20 per gli spazi vuoti
+		// ma è anche vero che cosi evitamo di fare nuovamente una chiamata nascondendo solo gli elementi
 		categorySelect.addEventListener('change', () => {
 			filterPhotosByCategory(photosData, categorySelect.value);
 		});
