@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8" />
@@ -40,7 +40,7 @@
 
 
 <body>
-
+	<header th:replace="~{fragments/fragments :: header}"></header>
 	<div class="container py-4">
 		<h1>Photo Gallery</h1>
 		<div class="row">
@@ -49,7 +49,7 @@
 					placeholder="Search a photo by title or tags...">
 			</div>
 			<div class="col-md-6">
-				<select id="category-select" class="form-control py-3">
+				<select id="category-select" class="form-control py-3" title="Select the category">
 					<option value="" selected>All categories</option>
 				</select>
 			</div>
