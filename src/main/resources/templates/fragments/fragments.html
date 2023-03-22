@@ -13,21 +13,25 @@
 	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js}"
 		defer></script>
 </th:block>
+
 </head>
 <body>
 	<header th:fragment="header" class="header-frag">
 		<nav class="container">
 			<ul class="row">
 				<li class="col-2"><a href="/">Home</a></li>
-				<li class="col-2"><a href="/photos">AD Photos</a></li>
-				<li class="col-2"><a href="/categories">AD categories</a></li>
+				<li th:if="${#authentication.authorities[0].toString() == 'ADMIN' }" class="col-2"><a href="/photos">AD Photos</a></li>
+				<li th:if="${#authentication.authorities[0].toString() == 'ADMIN' }" class="col-2"><a href="/categories">AD categories</a></li>
 				<li class="col-2"><a href="/apiPhotos">US Photos</a></li>
 				<li class="col-2"><a
 					th:href="${#authentication.principal != 'anonymousUser' ? '/logout' : '/login'}">
 						[[${#authentication.principal != 'anonymousUser' ? 'Logout' : 'Login'}]] </a>
 						</li>
 			</ul>
-			<!-- div>[[${#authentication.principal}]]</div-->
+			
+			<!-- div>[[${#authentication.authorities[0].getClass()}]]</div>
+			<div>è [[${#authentication.authorities[0]}]] ? -> [[${#authentication.authorities[0].toString() == 'ADMIN' ? 'true' : 'false' }]]</div-->
+			
 		</nav>
 	</header>
 </body>
