@@ -32,7 +32,13 @@ public class HomeController {
 	        if (!categoryPhotoMap.containsKey(categoryName)) {
 	            List<Photo> categoryPhotos = photoRepository.findByCategories(category);
 	            if (!categoryPhotos.isEmpty()) {
-	                categoryPhotoMap.put(categoryName, categoryPhotos.get(0));
+	            	for(Photo photo : categoryPhotos) {
+	            		if (!categoryPhotoMap.containsValue(photo)) 
+	            			 categoryPhotoMap.put(categoryName, photo);
+	            		else
+	            			 categoryPhotoMap.put(categoryName, categoryPhotos.get(0));
+	            	}
+	               
 	            }
 	        }
 	    }
