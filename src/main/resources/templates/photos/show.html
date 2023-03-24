@@ -22,13 +22,14 @@
 	</ul>
 
 	<img th:src="${photo.url}" th:alt="${photo.description}" />
+	<a class="btn btn-warning" th:href="@{/photos/edit/{id}(id=${photo.id})}">Edit</a>
 	<form th:action="@{'/photos/delete/{id}'(id=${photo.id})}"
 		method="post">
-		<button class="btn btn-danger" type="submit">Cancella</button>
+		<button class="btn btn-danger" type="submit">Cancel</button>
 	</form>
 
 	<a class="btn btn-success" th:href="@{photos/create}">
-		Inserisciunanuova foto</a>
+		New Photo</a>
 
 
 </body>
